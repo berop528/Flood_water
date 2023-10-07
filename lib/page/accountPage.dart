@@ -11,7 +11,7 @@ class _AccountPage extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(children: [Text('Pi;l')],),
+      child: Column(children: [Text('Pi;ld')],),
     );
   }
 }
