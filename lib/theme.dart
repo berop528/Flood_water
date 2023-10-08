@@ -1,51 +1,65 @@
 import 'package:flood_waterapp/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData floodTheme() {
   final ThemeData base = ThemeData(fontFamily: 'IBMplex');
   return base.copyWith(
       colorScheme: base.colorScheme.copyWith(
-          primary: primaryBlue,
-          onPrimary: whiteTextColor3,
-          secondary: yellowSecondary,
-          onSecondary: darkblueTextColor2,
-          background: blueskyBackground,
-          onBackground: primaryBlue,
+        primary: primaryBlue,
+        onPrimary: whiteTextColor3,
+        secondary: yellowSecondary,
+        onSecondary: darkblueTextColor2,
+        background: blueskyBackground,
+        onBackground: primaryBlue,
       ),
       textTheme: base.textTheme.copyWith(
-        headlineLarge: base.textTheme.headlineLarge!.copyWith(
-          fontSize: 36,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'IBMplex',
-          color: whiteTextColor3,
+        headlineLarge: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.headlineLarge!.copyWith(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
         ),
-        headlineMedium: base.textTheme.headlineMedium!.copyWith(
-            fontSize: 36, 
-            fontWeight: FontWeight.bold, 
-            fontFamily: 'IBMplex',
-            color: primaryBlue
+        headlineMedium: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.headlineMedium!.copyWith(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
+
+          // คุณสามารถเพิ่มรูปแบบตัวอักษรอื่น ๆ ใน textTheme ตามที่คุณต้องการ
         ),
-        headlineSmall: base.textTheme.headlineSmall!.copyWith(
-            fontSize: 20, 
-            fontWeight: FontWeight.bold, 
-            fontFamily: 'IBMplex',
-            color: primaryBlue
+       headlineSmall: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.headlineSmall!.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
+
+          // คุณสามารถเพิ่มรูปแบบตัวอักษรอื่น ๆ ใน textTheme ตามที่คุณต้องการ
         ),
-        bodyLarge: base.textTheme.bodyLarge!.copyWith(
-          fontFamily: 'IBMplex',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+         bodyLarge: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.bodyLarge!.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
+          ),
+        bodyMedium: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.bodyMedium!.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
         ),
-        bodyMedium: base.textTheme.bodyMedium!.copyWith(
-          fontFamily: 'IBMplex',
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: whiteTextColor3
-        ),
-        bodySmall: base.textTheme.bodySmall!.copyWith(
-          fontFamily: 'IBMplex',
-          fontSize: 18,
-        ),
+        bodySmall: GoogleFonts.ibmPlexSansThai(
+          textStyle: base.textTheme.bodySmall!.copyWith(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: whiteTextColor3,
+          ),
+      ),
       ),
       // .apply(
       //   displayColor: primaryBlue,
