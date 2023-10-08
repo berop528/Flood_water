@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: floodTheme(),
-      initialRoute: '/homepage',
+      initialRoute: '/welcome',
       routes: {
         '/welcome': (context) => const Welcome(), //หน้ายินดีต้อนรัย
         '/login': (context) => const Login(), //หน้าเข้าสู่ระบบ
