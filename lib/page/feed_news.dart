@@ -19,7 +19,7 @@ class _FeddNewsState extends State<FeddNews> {
   }
 
   Future<void> getPost() async {
-    const urlstr = "http://192.168.9.226/floodflow/select_post.php";
+    const urlstr = "http://172.21.245.64/floodflow/select_post.php";
 
     final url = Uri.parse(urlstr);
     final response = await http.get(url);

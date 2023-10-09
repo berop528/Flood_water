@@ -21,7 +21,7 @@ class _RegisterState extends State<Register> {
   TextEditingController confirmPassword = TextEditingController();
 
   Future addUser() async {
-    var urlstr = 'http://192.168.9.226/flood_flow/insert_user.php';
+    var urlstr = 'http://172.21.245.64/flood_flow/insert_user.php';
     var data = {};
     var url = Uri.parse(urlstr);
     data['user_fullname'] = fullname.text;

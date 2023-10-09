@@ -31,7 +31,7 @@ class _TellPromBlemState extends State<TellPromBlem> {
   TextEditingController detail = TextEditingController();
 
   Future addProblem() async {
-    var urlstr = "http://192.168.9.226/flood_flow/insert_post.php";
+    var urlstr = "http://172.21.245.64/flood_flow/insert_post.php";
     var url = Uri.parse(urlstr);
     var response = await http.post(url, body: {
       'user_id': widget.userID,
