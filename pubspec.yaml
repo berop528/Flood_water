@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.1.0
   google_fonts: ^6.1.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   assets:
     - asset/image/Welcome/
     - asset/image/weather/64x64/day/
+    - asset/image/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

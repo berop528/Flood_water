@@ -1,9 +1,11 @@
+import 'package:flood_waterapp/page/aboutapp.dart';
 import 'package:flood_waterapp/page/feed_news.dart';
 import 'package:flood_waterapp/page/homepage.dart';
 import 'package:flood_waterapp/page/accountPage.dart';
 import 'package:flood_waterapp/page/runhome.dart';
 import 'package:flood_waterapp/page/login.dart';
 import 'package:flood_waterapp/page/register.dart';
+import 'package:flood_waterapp/page/settingProfile.dart';
 import 'package:flood_waterapp/page/tell_promblem.dart';
 import 'package:flood_waterapp/page/welcome.dart';
 import 'package:flood_waterapp/theme.dart';
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       theme: floodTheme(),
       initialRoute: '/welcome',
@@ -27,12 +30,15 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => const Welcome(), //หน้ายินดีต้อนรัย
         '/login': (context) => const Login(), //หน้าเข้าสู่ระบบ
         '/register': (context) => const Register(), //หน้าสมัครสมาชิก
-        '/homepage' : (context) => const HomeNew(), //หน้าแรก
-        '/runhome':(context) => const RunHome(), //หน้าจอหลักในการแสดง UI 
-        '/feed' :(context) => const FeddNews(),  //หน้าข่าวสาร
-        '/Account' : (context) => const  AccountPage(), //หน้าบัญชีของฉัน
-        '/tellNews' : (context) => const TellPromBlem() //หน้าแจ้งปัญหาข่าว
-      }, 
+        '/homepage': (context) => const HomeNew(loginUser: '',), //หน้าแรก
+        '/runhome': (context) => const RunHome(loginUser: '',userEmail: '',userID: '',userName: '',userphone: '',), //หน้าจอหลักในการแสดง UI
+        '/feed': (context) => const FeddNews(), //หน้าข่าวสาร
+        '/Account': (context) => const AccountPage(), //หน้าบัญชีของฉัน
+        '/tellNews': (context) => const TellPromBlem(loginUser: '',userEmail: '',userID: '',userName: '',userphone: '',) ,//หน้าแจ้งปัญหาข่าว
+        '/aboutme' :(context) => const Aboutme(),
+        '/setting' :(context) => const ProfileSetting(loginUser: '',userEmail: '',userID: '',userName: '',userphone: '',)
+        
+      },
     );
   }
 }

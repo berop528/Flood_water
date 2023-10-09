@@ -12,20 +12,22 @@ ThemeData floodTheme() {
         onSecondary: darkblueTextColor2,
         background: blueskyBackground,
         onBackground: primaryBlue,
+        primaryContainer: greyTextColor1 ,
+        onError:  error
       ),
       textTheme: base.textTheme.copyWith(
         headlineLarge: GoogleFonts.ibmPlexSansThai(
           textStyle: base.textTheme.headlineLarge!.copyWith(
             fontSize: 36,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
         ),
         headlineMedium: GoogleFonts.ibmPlexSansThai(
           textStyle: base.textTheme.headlineMedium!.copyWith(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
 
           // คุณสามารถเพิ่มรูปแบบตัวอักษรอื่น ๆ ใน textTheme ตามที่คุณต้องการ
@@ -34,7 +36,7 @@ ThemeData floodTheme() {
           textStyle: base.textTheme.headlineSmall!.copyWith(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
 
           // คุณสามารถเพิ่มรูปแบบตัวอักษรอื่น ๆ ใน textTheme ตามที่คุณต้องการ
@@ -43,21 +45,21 @@ ThemeData floodTheme() {
           textStyle: base.textTheme.bodyLarge!.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
           ),
         bodyMedium: GoogleFonts.ibmPlexSansThai(
           textStyle: base.textTheme.bodyMedium!.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
         ),
         bodySmall: GoogleFonts.ibmPlexSansThai(
           textStyle: base.textTheme.bodySmall!.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: whiteTextColor3,
+          //  color: whiteTextColor3,
           ),
       ),
       ),

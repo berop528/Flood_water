@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomeNew extends StatefulWidget {
-  const HomeNew({Key? key}) : super(key: key);
+  final String loginUser;
+  const HomeNew({Key? key, required this.loginUser}) : super(key: key);
 
   @override
   State<HomeNew> createState() => _HomeNewState();
@@ -16,9 +17,12 @@ class _HomeNewState extends State<HomeNew> {
   Map<String, dynamic> weather = {};
   Map<String, dynamic> current = {};
   Map<String, dynamic> colud = {};
+  List<Map<String, dynamic>> users = [];
+
   @override
   void initState() {
     getWeather();
+    getUser();
     super.initState();
   }
 
@@ -42,11 +46,45 @@ class _HomeNewState extends State<HomeNew> {
     } else {}
   }
 
+  Future getUser() async {
+    const urlstr = 'http://192.168.9.226//flood_flow/select_user.php';
+    final url = Uri.parse(urlstr);
+    final Map<String, String> data = {'user_email': widget.loginUser};
+    final response = await http.post(url, body: data);
+
+    if (response.statusCode == 200) {
+      final json = response.body;
+      // print(json);
+      final data = jsonDecode(json);
+      users.clear;
+
+      if (data != null && data.isNotEmpty) {
+        for (final UserData in data) {
+          users.add(Map<String, dynamic>.from(UserData));
+        }
+      }
+
+      setState(() {});
+      print(users);
+      // checkusers();
+    }
+  }
+
+  // Future checkusers() async {
+  //   final String loginUsers = widget.loginUser; //ค่าจากหน้า login
+
+  //   for (var Datauser in user) {
+  //     final String user_email = Datauser['user_email'];
+  //     if (loginUsers == user_email) {
+  //       print('User found');
+  //     }
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     final dynamic province = location['name'];
     final dynamic time = location['localtime'];
-
     final dynamic weathers = weather['text'];
     Widget weatherImage;
 
@@ -149,16 +187,296 @@ class _HomeNewState extends State<HomeNew> {
     } else if (weathers == 'Moderate or heavy snow with thunder') {
       weatherImage = Image.asset('asset/image/weather/64x64/day/395.png');
     } else {
-      return Container(
-        child: Text('Null'),
+      final dynamic temp = current['temp_c'];
+      final dynamic cloudy = current['cloud'];
+      final dynamic humidity = current['humidity'];
+      final dynamic speedWind = current['wind_kph'];
+      final dynamic coludPm = colud['pm2_5'];
+
+      final userID = users.isNotEmpty ? users[0]['user_id'] : 'ไม่มีข้อมูล';
+      final userName =
+          users.isNotEmpty ? users[0]['user_fullname'] : 'ไม่มีข้อมูล';
+      // print(userName);
+      final userphone =
+          users.isNotEmpty ? users[0]['user_phoneNumber'] : 'ไม่มีข้อมูล';
+      final userEmail =
+          users.isNotEmpty ? users[0]['user_email'] : 'ไม่มีข้อมูล';
+
+     
+
+      return SafeArea(
+        child: Scaffold(
+          // backgroundColor: primaryBlue,
+          appBar: AppBar(
+            title: Text(
+              'หน้าแรก',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            centerTitle: true,
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          ),
+          body: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 350,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // สีขอบ
+                          spreadRadius: 5, //ความกว้างขอบ
+                          blurRadius: 7,
+                        )
+                      ]),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .spaceBetween, // จัดการวางแนวนอนระหว่าง Text และรูป
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment
+                                      .start, // จัดการวางแนวตั้งสำหรับ Text
+                                  children: [
+                                    Text(
+                                      'ยินดีต้อนรับ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                    Text(
+                                      '$userName',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: primaryBlue),
+                                    ),
+                                    Text(
+                                      '$time',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(color: yellowSecondary),
+                                    ),
+                                  ],
+                                ),
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage:
+                                      // AssetImage(
+                                      //   'asset/image/weather/64x64/day/116.png')
+
+                                      Image.network(
+                                              'https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg')
+                                          .image,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.location_on, color: yellowSecondary),
+                          Text(
+                            'จังหวัด $province',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Container(
+                    width: 300,
+                    decoration: BoxDecoration(
+                        // color: Theme.of(context).colorScheme.onPrimary,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween, // จัดการวางแนวนอนระหว่าง Text และรูป
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text('$weathers',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(color: Colors.black)),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        '$temp °C',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(color: Colors.black),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                  // weatherImage,
+                                  // // Text('efef',style: TextStyle(color: Colors.black),)
+
+                                  ///
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 300,
+                  height: 290,
+                  child: GridView.count(
+                    crossAxisCount: 2, // จำนวนคอลัม
+                    children: <Widget>[
+                      // รายการ Widget ใน GridView
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius:
+                              BorderRadius.circular(10), // ปรับขอบให้เป็นโค้ง
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                Icons.wb_cloudy,
+                                color: Theme.of(context).colorScheme.background,
+                              ),
+                              Text('เมฆปกคลุม'),
+                              Text('$cloudy %')
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius:
+                              BorderRadius.circular(10), // ปรับขอบให้เป็นโค้ง
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.water_drop,
+                                  color:
+                                      Theme.of(context).colorScheme.background),
+                              Text('ความชื้น'),
+                              Text('$humidity %')
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius:
+                              BorderRadius.circular(10), // ปรับขอบให้เป็นโค้ง
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.wind_power,
+                                  color:
+                                      Theme.of(context).colorScheme.background),
+                              Text('แรงลม'),
+                              Text('$speedWind Km/h')
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius:
+                              BorderRadius.circular(10), // ปรับขอบให้เป็นโค้ง
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.wb_cloudy,
+                                  color:
+                                      Theme.of(context).colorScheme.background),
+                              Text('Pm2.5'),
+                              Text('$coludPm %')
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
+    //   return Container(
+    //     child: Text('Null'),
+    //   );
 
     final dynamic temp = current['temp_c'];
     final dynamic cloudy = current['cloud'];
     final dynamic humidity = current['humidity'];
     final dynamic speedWind = current['wind_kph'];
     final dynamic coludPm = colud['pm2_5'];
+
+    final userName =
+        users.isNotEmpty ? users[0]['user_fullname'] : 'ไม่มีข้อมูล';
     return SafeArea(
       child: Scaffold(
         // backgroundColor: primaryBlue,
@@ -212,7 +530,7 @@ class _HomeNewState extends State<HomeNew> {
                                         .copyWith(color: Colors.black),
                                   ),
                                   Text(
-                                    'ชื่อผู้ใช้',
+                                    '$userName',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -292,14 +610,17 @@ class _HomeNewState extends State<HomeNew> {
                                     Text('$weathers',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyLarge),
+                                            .bodyLarge!
+                                            .copyWith(color: Colors.black)),
                                     SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       '$temp °C',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(color: Colors.black),
                                       textAlign: TextAlign.center,
                                     ),
                                   ],
